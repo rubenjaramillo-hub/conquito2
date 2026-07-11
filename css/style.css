@@ -1,0 +1,246 @@
+/* ==========================================================================
+   ESTILOS GENERALES Y VARIABLES (Glassmorphism Claro)
+   ========================================================================== */
+:root {
+    /* Fondos vibrantes para que el efecto "vidrio" resalte atrás */
+    --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #fdf2f8 50%, #f0fdf4 100%);
+    
+    /* El truco del vidrio: blanco muy transparente */
+    --bg-glass: rgba(255, 255, 255, 0.45); 
+    --bg-glass-input: rgba(255, 255, 255, 0.7);
+    
+    --text-main: #1e293b;       /* Gris oscuro para excelente lectura */
+    --text-muted: #64748b;      /* Gris medio para textos secundarios */
+    --primary: #4f46e5;         /* Indigo moderno para botones */
+    --primary-hover: #4338ca;   /* Indigo más oscuro */
+    --border-glass: rgba(255, 255, 255, 0.6); /* Borde blanco brillante */
+    --success: #16a34a;         /* Verde para completados */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL (MAIN - EFECTO VIDRIO)
+   ========================================================================== */
+main {
+    width: 100%;
+    max-width: 600px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%); /* Soporte Safari */
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08),
+                0 4px 12px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-glass);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, #6d3020, #c2601e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   FORMULARIO DE TAREAS (SECCIÓN 1)
+   ========================================================================== */
+form {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+#nombre {
+    grid-column: span 2;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    background: var(--bg-glass-input);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.85rem 1.2rem;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.25s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+/* Estilización sutil del placeholder */
+input::placeholder {
+    color: #94a3b8;
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, #925846 0%, #e7ba27 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 0px;
+    padding: 0.85rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    transition: all 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 73, 66, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+#mensaje {
+    font-size: 0.85rem;
+    color: #e11d48; /* Rojo vibrante */
+    margin-top: 0.5rem;
+    font-weight: 500;
+    min-height: 1.2rem;
+}
+
+/* ==========================================================================
+   SECCIÓN DE RESUMEN (SECCIÓN 2)
+   ========================================================================== */
+section:nth-of-type(2) {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin: 1.75rem 0;
+    border: 1px solid var(--border-glass);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+section:nth-of-type(2) h3 {
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+}
+
+section:nth-of-type(2) p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+section:nth-of-type(2) span {
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 1.2rem;
+}
+
+#completados {
+    color: var(--success) !important;
+}
+
+/* ==========================================================================
+   LISTA DE TAREAS (SECCIÓN 3)
+   ========================================================================== */
+#listaTareas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 1rem;
+}
+
+/* Cuando inyectes las tareas con JS, usa esta estructura estructurada clara */
+.tarea-item {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+    animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tarea-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.tarea-info h4 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.tarea-info p,
+.tarea-info small {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.tarea-acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mensaje-vacio {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer {
+    margin-top: 2.5rem;
+    font-size: 0.85rem;
+    font-style: oblique;
+    color: var(--text-muted);
+    text-align:left;
+    font-weight: 800;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <link rel="stylesheet" href="css/style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>Lista de que hacer</title>
+    </head>
+    <body>
+        <header>
+            <h1>Lista de que hacer</h1>
+        </header>
+        <main>
+            <section>
+                <form id="formTarea">
+                    <input type="text" id="nombre" placeholder="Nombre de tarea">
+                    <select id="prioridad">
+                        <option value="Alta">Alta</option>
+                         <option value="Media">Media</option>
+                          <option value="Baja">Baja</option>
+                    </select>
+                    <input type="date" id="fecha">
+                    <button type="submit">Agregar</button>
+                </form>
+                <p id="mensaje"></p>
+            </section>
+            <section>
+                <h3>Resumen: </h3>
+                <p>Total: <span id="total">0</span></p>
+                <p>Pendientes: <span id="pendientes">0</span></p>
+                <p>Completados: <span id="completados">0</span></p>
+            </section>
+            <section id="listaTareas">
+
+            </section>
+        </main>
+        <footer>Desarrollado por Rubén para ConQuito</footer>
+        <script src="js/script.js"></script>
+    </body>
+</html>
