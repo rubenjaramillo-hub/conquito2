@@ -10,8 +10,13 @@ const mensaje = document.getElementById("mensaje");
 
 async function obtenerUsuarios() {
     try {
-        mensaje.textContent = "Cargando usuarios...";
-        listaContenedor.innerHTML = "";
+        mensaje.textContent = "";
+        listaContenedor.innerHTML = `
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <span>Cargando usuarios...</span>
+            </div>
+        `;
 
         const respuesta = await fetch(API_URL);
         if (!respuesta.ok) {

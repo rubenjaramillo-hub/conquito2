@@ -7,8 +7,18 @@
         <title>Lista de que hacer</title>
     </head>
     <body>
-        <header>
+        <header class="header-principal">
             <h1>Lista de que hacer</h1>
+            <section id="divisaWidget" class="gadget gadget-izquierdo">
+                <h3>Divisas</h3>
+                <p id="mensajeDivisa" class="gadget-mensaje"></p>
+                <div id="divisaContenido" class="gadget-contenido"></div>
+            </section>
+            <section id="climaWidget" class="gadget gadget-derecho">
+                <button id="btnClima" type="button">Actualizar clima</button>
+                <p id="mensajeClima" class="gadget-mensaje"></p>
+                <div id="climaContenido" class="gadget-contenido"></div>
+            </section>
         </header>
         <main>
             <section>
@@ -35,6 +45,7 @@
             </section>
         </main>
         <footer>Desarrollado por Rubén para ConQuito</footer>
+        <script src="js/clima.js"></script>
         <script src="js/script.js"></script>
     </body>
 </html>

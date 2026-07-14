@@ -119,3 +119,7 @@ function mostrarTareas() {
 
 // Mostrar la lista al cargar la página
 mostrarTareas();
+
+if (typeof window.obtenerClimaQuito === "function") {
+    window.obtenerClimaQuito();
+}
