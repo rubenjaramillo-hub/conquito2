@@ -1,4 +1,9 @@
-const API_URL = "https://reqres.in/api/users?page=1";
+const API_URL = "https://reqres.in/api/users";
+const respuesta = await fetch(API_URL, {
+    headers: {
+        "x-api-key": "reqres_91d45ec232894938b6a6257ef3e60e59"
+    }
+});
 const btnCargar = document.getElementById("btnCargar");
 const listaContenedor = document.getElementById("listaTareas");
 const mensaje = document.getElementById("mensaje");
