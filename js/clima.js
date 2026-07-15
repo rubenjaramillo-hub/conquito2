@@ -1,5 +1,5 @@
 const URL_CLIMA = "https://api.open-meteo.com/v1/forecast?latitude=-0.2298&longitude=-78.5258&current_weather=true&timezone=America/Guayaquil&precipitation_probability=1&temperature_unit=celsius&windspeed_unit=kmh&hourly=temperature_2m,precipitation_probability,rain";
-const URL_DIVISA = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_UdxQe2Vv4efvyI59vQhr6JYq8sWqjZCEp0Ya7OO7&currencies=USD%2CEUR%2CGBP&base_currency=ECU";
+const URL_DIVISA = "https://api.freecurrencyapi.com/v1/latest?base_currency=USD&currencies=USD,EUR,GBP";
 const btnClima = document.getElementById("btnClima");
 const widgetClima = document.getElementById("climaWidget");
 const widgetDivisa = document.getElementById("divisaWidget");
@@ -103,7 +103,11 @@ async function obtenerDivisas() {
             </div>
         `;
 
-        const respuesta = await fetch(URL_DIVISA);
+        const respuesta = await fetch(URL_DIVISA, {
+            headers: {
+                apikey: "fca_live_UdxQe2Vv4efvyI59vQhr6JYq8sWqjZCEp0Ya7OO7"
+            }
+        });
         if (!respuesta.ok) {
             throw new Error(`Error HTTP: ${respuesta.status}`);
         }
