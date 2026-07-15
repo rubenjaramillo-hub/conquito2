@@ -2,19 +2,15 @@
    ESTILOS GENERALES Y VARIABLES (Glassmorphism Claro)
    ========================================================================== */
 :root {
-    /* Fondos vibrantes para que el efecto "vidrio" resalte atrás */
     --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #fdf2f8 50%, #f0fdf4 100%);
-    
-    /* El truco del vidrio: blanco muy transparente */
-    --bg-glass: rgba(255, 255, 255, 0.45); 
+    --bg-glass: rgba(255, 255, 255, 0.45);
     --bg-glass-input: rgba(255, 255, 255, 0.7);
-    
-    --text-main: #1e293b;       /* Gris oscuro para excelente lectura */
-    --text-muted: #64748b;      /* Gris medio para textos secundarios */
-    --primary: #4f46e5;         /* Indigo moderno para botones */
-    --primary-hover: #4338ca;   /* Indigo más oscuro */
-    --border-glass: rgba(255, 255, 255, 0.6); /* Borde blanco brillante */
-    --success: #16a34a;         /* Verde para completados */
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --border-glass: rgba(255, 255, 255, 0.6);
+    --success: #16a34a;
 }
 
 * {
@@ -34,15 +30,12 @@ body {
     padding: 2rem 1rem;
 }
 
-/* ==========================================================================
-   CONTENEDOR PRINCIPAL (MAIN - EFECTO VIDRIO)
-   ========================================================================== */
 main {
     width: 100%;
     max-width: 600px;
     background: var(--bg-glass);
     backdrop-filter: blur(16px) saturate(120%);
-    -webkit-backdrop-filter: blur(16px) saturate(120%); /* Soporte Safari */
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
     border-radius: 24px;
     padding: 2.5rem;
     box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08),
@@ -68,10 +61,13 @@ header h1 {
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    min-height: 220px;
+    flex-wrap: wrap;
 }
 
 .gadget {
-    position: relative;
+    position: absolute;
+    top: 0;
     background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 16px;
@@ -79,17 +75,18 @@ header h1 {
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
     backdrop-filter: blur(10px);
     min-width: 180px;
+    max-width: min(260px, calc(100% - 1rem));
     z-index: 2;
     cursor: move;
     user-select: none;
 }
 
 .gadget-izquierdo {
-    margin-right: auto;
+    left: 0;
 }
 
 .gadget-derecho {
-    margin-left: auto;
+    right: 0;
 }
 
 .gadget button {
@@ -134,9 +131,6 @@ header h1 {
     color: #334155;
 }
 
-/* ==========================================================================
-   FORMULARIO DE TAREAS (SECCIÓN 1)
-   ========================================================================== */
 form {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -170,7 +164,6 @@ input:focus, select:focus {
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
 
-/* Estilización sutil del placeholder */
 input::placeholder {
     color: #94a3b8;
 }
@@ -199,7 +192,7 @@ button[type="submit"]:active {
 
 #mensaje {
     font-size: 0.85rem;
-    color: #e11d48; /* Rojo vibrante */
+    color: #e11d48;
     margin-top: 0.5rem;
     font-weight: 500;
     min-height: 1.2rem;
@@ -231,9 +224,6 @@ button[type="submit"]:active {
     to { transform: rotate(360deg); }
 }
 
-/* ==========================================================================
-   SECCIÓN DE RESUMEN (SECCIÓN 2)
-   ========================================================================== */
 section:nth-of-type(2) {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 16px;
@@ -274,9 +264,6 @@ section:nth-of-type(2) span {
     color: var(--success) !important;
 }
 
-/* ==========================================================================
-   LISTA DE TAREAS (SECCIÓN 3)
-   ========================================================================== */
 #listaTareas {
     display: flex;
     flex-direction: column;
@@ -284,7 +271,6 @@ section:nth-of-type(2) span {
     margin-top: 1rem;
 }
 
-/* Cuando inyectes las tareas con JS, usa esta estructura estructurada clara */
 .tarea-item {
     background: rgba(255, 255, 255, 0.55);
     border: 1px solid var(--border-glass);
@@ -326,20 +312,33 @@ section:nth-of-type(2) span {
     padding: 0.5rem 0;
 }
 
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
 footer {
     margin-top: 2.5rem;
     font-size: 0.85rem;
     font-style: oblique;
     color: var(--text-muted);
-    text-align:left;
+    text-align: left;
     font-weight: 800;
 }
 
-/* Animación de entrada suave */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .header-principal {
+        min-height: auto;
+        gap: 0.75rem;
+    }
+
+    .gadget {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-width: none;
+        margin-bottom: 0.5rem;
+    }
 }

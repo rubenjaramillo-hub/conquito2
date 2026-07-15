@@ -7,38 +7,66 @@ const contenedorClima = document.getElementById("climaContenido");
 const contenedorDivisa = document.getElementById("divisaContenido");
 const mensajeClima = document.getElementById("mensajeClima");
 const mensajeDivisa = document.getElementById("mensajeDivisa");
+const headerPrincipal = document.querySelector(".header-principal");
 
 let arrastrando = false;
 let offsetX = 0;
 let offsetY = 0;
+let widgetActivo = null;
 
-function iniciarArrastre(evento) {
-    if (!widgetClima) return;
+const ajustarDentroDelContenedor = (widget) => {
+    if (!widget || !headerPrincipal) return;
+
+    const headerRect = headerPrincipal.getBoundingClientRect();
+    const maxLeft = Math.max(0, headerRect.width - widget.offsetWidth);
+    const maxTop = Math.max(0, headerRect.height - widget.offsetHeight);
+    const leftActual = parseFloat(widget.style.left || "0");
+    const topActual = parseFloat(widget.style.top || "0");
+
+    widget.style.left = `${Math.min(Math.max(leftActual, 0), maxLeft)}px`;
+    widget.style.top = `${Math.min(Math.max(topActual, 0), maxTop)}px`;
+};
+
+const iniciarArrastre = (evento, widget) => {
+    if (!widget || !headerPrincipal) return;
+
     arrastrando = true;
-    const rect = widgetClima.getBoundingClientRect();
+    widgetActivo = widget;
+
+    const rect = widget.getBoundingClientRect();
     offsetX = evento.clientX - rect.left;
     offsetY = evento.clientY - rect.top;
-    widgetClima.style.cursor = "grabbing";
-}
 
-function moverWidget(evento) {
-    if (!arrastrando || !widgetClima) return;
+    widget.style.cursor = "grabbing";
+    widget.style.zIndex = "20";
+};
 
-    const x = evento.clientX - offsetX;
-    const y = evento.clientY - offsetY;
+const moverWidget = (evento) => {
+    if (!arrastrando || !widgetActivo || !headerPrincipal) return;
 
-    widgetClima.style.left = `${x}px`;
-    widgetClima.style.top = `${y}px`;
-}
+    const headerRect = headerPrincipal.getBoundingClientRect();
+    const x = evento.clientX - offsetX - headerRect.left;
+    const y = evento.clientY - offsetY - headerRect.top;
+    const maxLeft = Math.max(0, headerRect.width - widgetActivo.offsetWidth);
+    const maxTop = Math.max(0, headerRect.height - widgetActivo.offsetHeight);
 
-function detenerArrastre() {
+    widgetActivo.style.left = `${Math.min(Math.max(x, 0), maxLeft)}px`;
+    widgetActivo.style.top = `${Math.min(Math.max(y, 0), maxTop)}px`;
+};
+
+const detenerArrastre = () => {
     arrastrando = false;
-    if (widgetClima) {
-        widgetClima.style.cursor = "move";
-    }
-}
 
-async function obtenerClimaQuito() {
+    if (widgetActivo) {
+        widgetActivo.style.cursor = "move";
+        widgetActivo.style.zIndex = "2";
+        ajustarDentroDelContenedor(widgetActivo);
+    }
+
+    widgetActivo = null;
+};
+
+const obtenerClimaQuito = async () => {
     if (!contenedorClima || !mensajeClima) return;
 
     try {
@@ -89,9 +117,9 @@ async function obtenerClimaQuito() {
         console.error("Error al obtener los datos del clima:", error);
         mensajeClima.textContent = "No se pudo obtener el clima actual.";
     }
-}
+};
 
-async function obtenerDivisas() {
+const obtenerDivisas = async () => {
     if (!contenedorDivisa || !mensajeDivisa) return;
 
     try {
@@ -108,6 +136,7 @@ async function obtenerDivisas() {
                 apikey: "fca_live_UdxQe2Vv4efvyI59vQhr6JYq8sWqjZCEp0Ya7OO7"
             }
         });
+
         if (!respuesta.ok) {
             throw new Error(`Error HTTP: ${respuesta.status}`);
         }
@@ -131,22 +160,25 @@ async function obtenerDivisas() {
         console.error("Error al obtener las divisas:", error);
         mensajeDivisa.textContent = "No se pudieron cargar las divisas.";
     }
-}
+};
 
 if (btnClima) {
     btnClima.addEventListener("click", obtenerClimaQuito);
 }
 
 if (widgetClima) {
-    widgetClima.addEventListener("mousedown", iniciarArrastre);
+    widgetClima.addEventListener("mousedown", (evento) => iniciarArrastre(evento, widgetClima));
 }
 
 if (widgetDivisa) {
-    widgetDivisa.addEventListener("mousedown", iniciarArrastre);
+    widgetDivisa.addEventListener("mousedown", (evento) => iniciarArrastre(evento, widgetDivisa));
 }
 
 document.addEventListener("mousemove", moverWidget);
 document.addEventListener("mouseup", detenerArrastre);
+window.addEventListener("resize", () => {
+    [widgetClima, widgetDivisa].filter(Boolean).forEach(ajustarDentroDelContenedor);
+});
 
 if (typeof window !== "undefined") {
     window.obtenerClimaQuito = obtenerClimaQuito;
